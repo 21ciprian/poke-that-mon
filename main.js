@@ -65,6 +65,7 @@ function createMiniPokemonCard(pokemon) {
     infoContainer.append(idPokemon, pokemonName, pokemonType);
     miniPokemonCard.append(imgContainer, infoContainer);
     pokemonsContainer.appendChild(miniPokemonCard);
+    miniPokemonCard.addEventListener('click', getPokemonByLabel);
 }
 function getPokemonByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -161,10 +162,15 @@ function createBigPokemonCard(pokemon) {
     pokemonModal.appendChild(bigPokemonCard);
 }
 function hideModal(event) {
+    // console.log('hide')
     if (event.target === pokemonModal) {
-        console.log('hide');
         pokemonModal.style.display = 'none';
     }
+}
+function getPokemonByLabel(event) {
+    event.stopPropagation();
+    getPokemonByName(event.target.ariaLabel);
+    pokemonModal.style.display = 'block';
 }
 window.addEventListener('click', hideModal);
 getPokemonsList();

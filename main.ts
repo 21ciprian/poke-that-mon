@@ -173,6 +173,7 @@ function createMiniPokemonCard(pokemon: PProps) {
 	miniPokemonCard.append(imgContainer, infoContainer)
 
 	pokemonsContainer.appendChild(miniPokemonCard)
+	miniPokemonCard.addEventListener('click', getPokemonByLabel)
 }
 
 async function getPokemonByName(name: string) {
@@ -292,10 +293,16 @@ function createBigPokemonCard(pokemon: PProps) {
 }
 
 function hideModal(event: MouseEvent) {
+	// console.log('hide')
 	if (event.target === pokemonModal) {
-		console.log('hide')
 		pokemonModal.style.display = 'none'
 	}
+}
+function getPokemonByLabel(event: any) {
+	event.stopPropagation()
+
+	getPokemonByName(event.target.ariaLabel)
+	pokemonModal.style.display = 'block'
 }
 window.addEventListener('click', hideModal)
 
