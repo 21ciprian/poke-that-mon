@@ -160,3 +160,12 @@ button:hover {
 	overflow: hidden;
 	background-color: rgba(0, 0, 0, 0.4);
 }
+.bigPokemonCard .stats {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	border: 2px solid black;
+	border-radius: 1rem;
+	margin-top: 0.5rem;
+	background-color: white;
+}
