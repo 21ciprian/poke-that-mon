@@ -121,25 +121,20 @@ async function getPokemonById(id: number): Promise<void> {
 	const url = `https://pokeapi.co/api/v2/pokemon/${id}`
 	const response = await fetch(url)
 	const pokemon = await response.json()
-	console.log('pokemon: ', pokemon)
 
 	createMiniPokemonCard(pokemon)
 }
 function createMiniPokemonCard(pokemon: PProps) {
 	const poke_types = pokemon.types.map(type => type.type.name)
 	const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
-	const miniPokemonCard = <HTMLDivElement>document.createElement('div')
 
+	const miniPokemonCard = <HTMLDivElement>document.createElement('div')
 	miniPokemonCard.classList.add('miniPokemonCard')
 	miniPokemonCard.setAttribute('aria-label', pokemon.name)
 
 	const imgContainer = <HTMLDivElement>document.createElement('div')
 	imgContainer.classList.add('img-container')
 	imgContainer.setAttribute('aria-label', pokemon.name)
-
-	const infoContainer = <HTMLDivElement>document.createElement('div')
-	infoContainer.classList.add('info')
-	infoContainer.setAttribute('aria-label', pokemon.name)
 
 	const pokeImg = <HTMLImageElement>document.createElement('img')
 	pokeImg.setAttribute('aria-label', pokemon.name)
@@ -148,6 +143,10 @@ function createMiniPokemonCard(pokemon: PProps) {
 		`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
 	)
 	pokeImg.setAttribute('alt', pokemon.name)
+
+	const infoContainer = <HTMLDivElement>document.createElement('div')
+	infoContainer.classList.add('info')
+	infoContainer.setAttribute('aria-label', pokemon.name)
 
 	const idPokemon = <HTMLSpanElement>document.createElement('span')
 	idPokemon.setAttribute('aria-label', pokemon.name)
@@ -167,7 +166,6 @@ function createMiniPokemonCard(pokemon: PProps) {
 	spanType.innerText = poke_types[0]
 
 	pokemonType.appendChild(spanType)
-
 	imgContainer.appendChild(pokeImg)
 	infoContainer.append(idPokemon, pokemonName, pokemonType)
 	miniPokemonCard.append(imgContainer, infoContainer)
@@ -181,20 +179,19 @@ async function getPokemonByName(name: string) {
 	const url = `https://pokeapi.co/api/v2/pokemon/${name}`
 	const response = await fetch(url)
 	const pokemonName = await response.json()
-	// createBigPokemonCard(pokemonName)
+	createBigPokemonCard(pokemonName)
 	nameInput.value = ''
 	console.log('pokemonName', pokemonName)
 }
-// getPokemonByName('bulbasaur')
 function handleSearch() {
 	const name = nameInput.value
 	getPokemonByName(name)
-	// pokemonModal.style.display = 'block'
 }
 searchButton.addEventListener('click', handleSearch)
 
 function createBigPokemonCard(pokemon: PProps) {
 	const poke_types = pokemon.types.map(type => type.type.name)
+	console.log('poke_types: ', poke_types[0])
 	const bigPokemonCard = <HTMLDivElement>document.createElement('div')
 	bigPokemonCard.classList.add('bigPokemonCard')
 
@@ -203,28 +200,34 @@ function createBigPokemonCard(pokemon: PProps) {
 	for (let i = 0; i < firstMoves; i++) {
 		moves.push(pokemon.moves[i].move.name)
 	}
-	// console.log('move outside', moves)
-	const pokemon_types = pokemon.types.map(function (item) {
-		return item.type.name
-	})
+
 	const abilities = pokemon.abilities.map(function (item) {
 		return item.ability
 	})
 	const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
-	const abilityLi = <HTMLLIElement>document.createElement('li')
-	const moveLi = <HTMLLIElement>document.createElement('li')
-	const ability = abilities
+	const abilitiesList = <HTMLUListElement>document.createElement('ul')
+	abilitiesList.classList.add('ability')
+
+	abilities
 		.map(function (item) {
-			return (abilityLi.innerText = `${item.name}`)
-			// `<li>${item.name}</li>`) //(<HTMLElement>document.createElement('li'))
+			const abilityLi = <HTMLLIElement>document.createElement('li')
+			abilityLi.innerText = item.name
+			abilitiesList.appendChild(abilityLi)
 		})
 		.join('')
-	const move = moves
+	const movesList = <HTMLUListElement>document.createElement('ul')
+	movesList.classList.add('moves')
+	const movesHeader = <HTMLHeadingElement>document.createElement('h4')
+	movesHeader.innerText = `Main moves: `
+	movesList.appendChild(movesHeader)
+
+	moves
 		.map(function (move) {
-			return (moveLi.innerText = `${move}`) //`<li>${item}</li>`
+			const moveLi = <HTMLLIElement>document.createElement('li')
+			moveLi.innerText = move
+			movesList.appendChild(moveLi)
 		})
 		.join('')
-	// console.log('move', move)
 	const imgContainer = <HTMLDivElement>document.createElement('div')
 	imgContainer.classList.add('img-container')
 	imgContainer.setAttribute('aria-label', pokemon.name)
@@ -267,25 +270,14 @@ function createBigPokemonCard(pokemon: PProps) {
 	divAbilities.classList.add('abilities')
 	abilitiesHeader.innerText = `Main abilities: `
 
-	const abilitiesList = <HTMLUListElement>document.createElement('ul')
-	abilitiesList.classList.add('ability')
-
-	abilitiesList.appendChild(abilityLi)
 	divAbilities.append(abilitiesHeader, abilitiesList)
-	pokeStats.append(divAbilities)
+	pokeStats.append(divAbilities, movesList)
 	pokemonType.appendChild(spanType)
-
-	const movesList = <HTMLUListElement>document.createElement('ul')
-	movesList.classList.add('moves')
-
-	const movesHeader = <HTMLHeadingElement>document.createElement('h4')
-	movesHeader.innerText = `Main moves: `
-	movesList.appendChild(moveLi)
 
 	imgContainer.appendChild(pokeImg)
 
 	numNameType.append(spanNum, pokeName, pokemonType)
-	infoContainer.append(numNameType, pokeStats, movesList)
+	infoContainer.append(numNameType, pokeStats)
 
 	bigPokemonCard.append(imgContainer, infoContainer)
 
@@ -293,14 +285,11 @@ function createBigPokemonCard(pokemon: PProps) {
 }
 
 function hideModal(event: MouseEvent) {
-	// console.log('hide')
 	if (event.target === pokemonModal) {
 		pokemonModal.style.display = 'none'
 	}
 }
 function getPokemonByLabel(event: any) {
-	event.stopPropagation()
-
 	getPokemonByName(event.target.ariaLabel)
 	pokemonModal.style.display = 'block'
 }
