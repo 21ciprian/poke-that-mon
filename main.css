@@ -14,3 +14,9 @@ body {
 	margin: 0;
 	position: relative;
 }
+
+h1 {
+	letter-spacing: 3px;
+	color: rgb(0, 217, 255);
+	text-decoration: underline;
+}
