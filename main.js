@@ -15,13 +15,20 @@ nameInput === null || nameInput === void 0 ? void 0 : nameInput.addEventListener
 const pokemonsContainer = document.getElementById('pokemonContainer');
 const pokemonModal = document.querySelector('#pokemonModal');
 const pokemon_number = 20;
+function getPokemonsList() {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (let i = 1; i <= pokemon_number; i++) {
+            yield getPokemonById(i);
+        }
+    });
+}
 function getPokemonById(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
         const response = yield fetch(url);
         const pokemon = yield response.json();
-        console.log('pokemon: ', pokemon);
+        console.log('pokemon: ', pokemon.name);
         // createMiniPokemonCard(pokemon);
     });
 }
-getPokemonById(2);
+getPokemonsList();

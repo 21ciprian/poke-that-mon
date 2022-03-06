@@ -9,12 +9,17 @@ nameInput?.addEventListener('input', () =>
 const pokemonsContainer = document.getElementById('pokemonContainer')
 const pokemonModal = document.querySelector('#pokemonModal')
 const pokemon_number: number = 20
+async function getPokemonsList() {
+	for (let i = 1; i <= pokemon_number; i++) {
+		await getPokemonById(i)
+	}
+}
 async function getPokemonById(id: number): Promise<void> {
 	const url = `https://pokeapi.co/api/v2/pokemon/${id}`
 	const response = await fetch(url)
 	const pokemon = await response.json()
-	console.log('pokemon: ', pokemon)
+	console.log('pokemon: ', pokemon.name)
 
 	// createMiniPokemonCard(pokemon);
 }
-getPokemonById(2)
+getPokemonsList()
