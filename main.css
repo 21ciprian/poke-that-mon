@@ -97,3 +97,7 @@ button:hover {
 	font-size: 0.8em;
 	padding: 5px 10px;
 }
+.miniPokemonCard .name {
+	margin: 15px 0 7px;
+	letter-spacing: 1px;
+}
