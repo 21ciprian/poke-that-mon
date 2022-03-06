@@ -102,6 +102,7 @@ type PProps = {
 }
 const searchButton = <HTMLButtonElement>document.querySelector('#search')
 const nameInput = <HTMLInputElement>document.querySelector('#nameInput')
+// console.log('nameInput: ', nameInput)
 
 const pokemonsContainer = <HTMLElement>(
 	document.querySelector('#pokemonContainer')
@@ -183,5 +184,12 @@ async function getPokemonByName(name: string) {
 	nameInput.value = ''
 	console.log('pokemonName', pokemonName)
 }
-getPokemonByName('bulbasaur')
+// getPokemonByName('bulbasaur')
+function handleInput() {
+	const name = nameInput.value
+	getPokemonByName(name)
+	// pokemonModal.style.display = 'block'
+}
+searchButton.addEventListener('click', handleInput)
+
 // getPokemonsList()

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const searchButton = document.querySelector('#search');
 const nameInput = document.querySelector('#nameInput');
+// console.log('nameInput: ', nameInput)
 const pokemonsContainer = (document.querySelector('#pokemonContainer'));
 console.log('pokemonsContainer: ', pokemonsContainer);
 const pokemonModal = document.querySelector('#pokemonModal');
@@ -76,5 +77,11 @@ function getPokemonByName(name) {
         console.log('pokemonName', pokemonName);
     });
 }
-getPokemonByName('bulbasaur');
+// getPokemonByName('bulbasaur')
+function handleInput() {
+    const name = nameInput.value;
+    getPokemonByName(name);
+    // pokemonModal.style.display = 'block'
+}
+searchButton.addEventListener('click', handleInput);
 // getPokemonsList()
