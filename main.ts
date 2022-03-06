@@ -291,4 +291,12 @@ function createBigPokemonCard(pokemon: PProps) {
 	pokemonModal.appendChild(bigPokemonCard)
 }
 
+function hideModal(event: MouseEvent) {
+	if (event.target === pokemonModal) {
+		console.log('hide')
+		pokemonModal.style.display = 'none'
+	}
+}
+window.addEventListener('click', hideModal)
+
 getPokemonsList()

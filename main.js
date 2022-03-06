@@ -160,4 +160,11 @@ function createBigPokemonCard(pokemon) {
     bigPokemonCard.append(imgContainer, infoContainer);
     pokemonModal.appendChild(bigPokemonCard);
 }
+function hideModal(event) {
+    if (event.target === pokemonModal) {
+        console.log('hide');
+        pokemonModal.style.display = 'none';
+    }
+}
+window.addEventListener('click', hideModal);
 getPokemonsList();
