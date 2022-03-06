@@ -122,3 +122,8 @@ button:hover {
 	height: 270px;
 	text-align: center;
 }
+.bigPokemonCard .img-container img {
+	margin: auto;
+	margin-top: 20px;
+	max-width: 100%;
+}
