@@ -38,11 +38,11 @@ function createMiniPokemonCard(pokemon) {
     miniPokemonCard.classList.add('miniPokemonCard');
     miniPokemonCard.setAttribute('aria-label', pokemon.name);
     const imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
+    imgContainer.setAttribute('aria-label', pokemon.name);
     const infoContainer = document.createElement('div');
     infoContainer.classList.add('info');
     infoContainer.setAttribute('aria-label', pokemon.name);
-    imgContainer.classList.add('img-container');
-    imgContainer.setAttribute('aria-label', pokemon.name);
     const pokeImg = document.createElement('img');
     pokeImg.setAttribute('aria-label', pokemon.name);
     pokeImg.setAttribute('src', `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`);
@@ -78,10 +78,86 @@ function getPokemonByName(name) {
     });
 }
 // getPokemonByName('bulbasaur')
-function handleInput() {
+function handleSearch() {
     const name = nameInput.value;
     getPokemonByName(name);
     // pokemonModal.style.display = 'block'
 }
-searchButton.addEventListener('click', handleInput);
-// getPokemonsList()
+searchButton.addEventListener('click', handleSearch);
+function createBigPokemonCard(pokemon) {
+    const poke_types = pokemon.types.map(type => type.type.name);
+    const bigPokemonCard = document.createElement('div');
+    bigPokemonCard.classList.add('bigPokemonCard');
+    const firstMoves = 3;
+    const moves = [];
+    for (let i = 0; i < firstMoves; i++) {
+        moves.push(pokemon.moves[i].move.name);
+    }
+    // console.log('move outside', moves)
+    const pokemon_types = pokemon.types.map(function (item) {
+        return item.type.name;
+    });
+    const abilities = pokemon.abilities.map(function (item) {
+        return item.ability;
+    });
+    const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+    const abilityLi = document.createElement('li');
+    const moveLi = document.createElement('li');
+    const ability = abilities
+        .map(function (item) {
+        return (abilityLi.innerText = `${item.name}`);
+        // `<li>${item.name}</li>`) //(<HTMLElement>document.createElement('li'))
+    })
+        .join('');
+    const move = moves
+        .map(function (move) {
+        return (moveLi.innerText = `${move}`); //`<li>${item}</li>`
+    })
+        .join('');
+    // console.log('move', move)
+    const imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
+    imgContainer.setAttribute('aria-label', pokemon.name);
+    const pokeImg = document.createElement('img');
+    pokeImg.setAttribute('aria-label', pokemon.name);
+    pokeImg.setAttribute('src', `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`);
+    pokeImg.setAttribute('alt', pokemon.name);
+    const infoContainer = document.createElement('div');
+    infoContainer.classList.add('info');
+    const numNameType = document.createElement('div');
+    const spanNum = document.createElement('span');
+    spanNum.innerText = `#${pokemon.id.toString().padStart(3, '0')}`;
+    spanNum.classList.add('number');
+    const pokeName = document.createElement('h3');
+    pokeName.classList.add('name');
+    pokeName.innerText = name;
+    const pokemonType = document.createElement('small');
+    pokemonType.classList.add('type');
+    pokemonType.innerText = `Type: `;
+    const spanType = document.createElement('span');
+    spanType.innerText = poke_types[0];
+    const pokeStats = document.createElement('section');
+    pokeStats.classList.add('stats');
+    const divAbilities = document.createElement('div');
+    divAbilities.classList.add('abilities');
+    const abilitiesHeader = document.createElement('h4');
+    divAbilities.classList.add('abilities');
+    abilitiesHeader.innerText = `Main abilities: `;
+    const abilitiesList = document.createElement('ul');
+    abilitiesList.classList.add('ability');
+    abilitiesList.appendChild(abilityLi);
+    divAbilities.append(abilitiesHeader, abilitiesList);
+    pokeStats.append(divAbilities);
+    pokemonType.appendChild(spanType);
+    const movesList = document.createElement('ul');
+    movesList.classList.add('moves');
+    const movesHeader = document.createElement('h4');
+    movesHeader.innerText = `Main moves: `;
+    movesList.appendChild(moveLi);
+    imgContainer.appendChild(pokeImg);
+    numNameType.append(spanNum, pokeName, pokemonType);
+    infoContainer.append(numNameType, pokeStats, movesList);
+    bigPokemonCard.append(imgContainer, infoContainer);
+    pokemonModal.appendChild(bigPokemonCard);
+}
+getPokemonsList();

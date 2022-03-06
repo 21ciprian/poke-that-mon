@@ -108,7 +108,7 @@ const pokemonsContainer = <HTMLElement>(
 	document.querySelector('#pokemonContainer')
 )
 console.log('pokemonsContainer: ', pokemonsContainer)
-const pokemonModal = document.querySelector('#pokemonModal')
+const pokemonModal = <HTMLElement>document.querySelector('#pokemonModal')
 
 const pokemon_number: number = 10
 
@@ -134,12 +134,12 @@ function createMiniPokemonCard(pokemon: PProps) {
 	miniPokemonCard.setAttribute('aria-label', pokemon.name)
 
 	const imgContainer = <HTMLDivElement>document.createElement('div')
+	imgContainer.classList.add('img-container')
+	imgContainer.setAttribute('aria-label', pokemon.name)
+
 	const infoContainer = <HTMLDivElement>document.createElement('div')
 	infoContainer.classList.add('info')
 	infoContainer.setAttribute('aria-label', pokemon.name)
-
-	imgContainer.classList.add('img-container')
-	imgContainer.setAttribute('aria-label', pokemon.name)
 
 	const pokeImg = <HTMLImageElement>document.createElement('img')
 	pokeImg.setAttribute('aria-label', pokemon.name)
@@ -185,11 +185,110 @@ async function getPokemonByName(name: string) {
 	console.log('pokemonName', pokemonName)
 }
 // getPokemonByName('bulbasaur')
-function handleInput() {
+function handleSearch() {
 	const name = nameInput.value
 	getPokemonByName(name)
 	// pokemonModal.style.display = 'block'
 }
-searchButton.addEventListener('click', handleInput)
+searchButton.addEventListener('click', handleSearch)
 
-// getPokemonsList()
+function createBigPokemonCard(pokemon: PProps) {
+	const poke_types = pokemon.types.map(type => type.type.name)
+	const bigPokemonCard = <HTMLDivElement>document.createElement('div')
+	bigPokemonCard.classList.add('bigPokemonCard')
+
+	const firstMoves = 3
+	const moves = []
+	for (let i = 0; i < firstMoves; i++) {
+		moves.push(pokemon.moves[i].move.name)
+	}
+	// console.log('move outside', moves)
+	const pokemon_types = pokemon.types.map(function (item) {
+		return item.type.name
+	})
+	const abilities = pokemon.abilities.map(function (item) {
+		return item.ability
+	})
+	const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1)
+	const abilityLi = <HTMLLIElement>document.createElement('li')
+	const moveLi = <HTMLLIElement>document.createElement('li')
+	const ability = abilities
+		.map(function (item) {
+			return (abilityLi.innerText = `${item.name}`)
+			// `<li>${item.name}</li>`) //(<HTMLElement>document.createElement('li'))
+		})
+		.join('')
+	const move = moves
+		.map(function (move) {
+			return (moveLi.innerText = `${move}`) //`<li>${item}</li>`
+		})
+		.join('')
+	// console.log('move', move)
+	const imgContainer = <HTMLDivElement>document.createElement('div')
+	imgContainer.classList.add('img-container')
+	imgContainer.setAttribute('aria-label', pokemon.name)
+
+	const pokeImg = <HTMLImageElement>document.createElement('img')
+	pokeImg.setAttribute('aria-label', pokemon.name)
+	pokeImg.setAttribute(
+		'src',
+		`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`
+	)
+	pokeImg.setAttribute('alt', pokemon.name)
+
+	const infoContainer = <HTMLDivElement>document.createElement('div')
+	infoContainer.classList.add('info')
+
+	const numNameType = <HTMLDivElement>document.createElement('div')
+
+	const spanNum = <HTMLSpanElement>document.createElement('span')
+	spanNum.innerText = `#${pokemon.id.toString().padStart(3, '0')}`
+	spanNum.classList.add('number')
+
+	const pokeName = <HTMLHeadingElement>document.createElement('h3')
+	pokeName.classList.add('name')
+	pokeName.innerText = name
+
+	const pokemonType = <HTMLElement>document.createElement('small')
+	pokemonType.classList.add('type')
+	pokemonType.innerText = `Type: `
+
+	const spanType = <HTMLSpanElement>document.createElement('span')
+	spanType.innerText = poke_types[0]
+
+	const pokeStats = <HTMLElement>document.createElement('section')
+	pokeStats.classList.add('stats')
+
+	const divAbilities = <HTMLDivElement>document.createElement('div')
+	divAbilities.classList.add('abilities')
+
+	const abilitiesHeader = <HTMLHeadingElement>document.createElement('h4')
+	divAbilities.classList.add('abilities')
+	abilitiesHeader.innerText = `Main abilities: `
+
+	const abilitiesList = <HTMLUListElement>document.createElement('ul')
+	abilitiesList.classList.add('ability')
+
+	abilitiesList.appendChild(abilityLi)
+	divAbilities.append(abilitiesHeader, abilitiesList)
+	pokeStats.append(divAbilities)
+	pokemonType.appendChild(spanType)
+
+	const movesList = <HTMLUListElement>document.createElement('ul')
+	movesList.classList.add('moves')
+
+	const movesHeader = <HTMLHeadingElement>document.createElement('h4')
+	movesHeader.innerText = `Main moves: `
+	movesList.appendChild(moveLi)
+
+	imgContainer.appendChild(pokeImg)
+
+	numNameType.append(spanNum, pokeName, pokemonType)
+	infoContainer.append(numNameType, pokeStats, movesList)
+
+	bigPokemonCard.append(imgContainer, infoContainer)
+
+	pokemonModal.appendChild(bigPokemonCard)
+}
+
+getPokemonsList()
