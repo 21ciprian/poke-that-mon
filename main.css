@@ -133,3 +133,11 @@ button:hover {
 	margin-top: 10px;
 	justify-content: center;
 }
+.bigPokemonCard .number {
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	font-size: 0.8em;
+	padding: 5px 10px;
+	width: 5rem;
+	margin: auto;
+}
