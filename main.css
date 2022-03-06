@@ -141,3 +141,7 @@ button:hover {
 	width: 5rem;
 	margin: auto;
 }
+.bigPokemonCard .name {
+	margin: 5px 0 7px;
+	letter-spacing: 1px;
+}
