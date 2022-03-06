@@ -173,4 +173,15 @@ function createMiniPokemonCard(pokemon: PProps) {
 
 	pokemonsContainer.appendChild(miniPokemonCard)
 }
-getPokemonsList()
+
+async function getPokemonByName(name: string) {
+	//name
+	const url = `https://pokeapi.co/api/v2/pokemon/${name}`
+	const response = await fetch(url)
+	const pokemonName = await response.json()
+	// createBigPokemonCard(pokemonName)
+	nameInput.value = ''
+	console.log('pokemonName', pokemonName)
+}
+getPokemonByName('bulbasaur')
+// getPokemonsList()

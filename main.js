@@ -65,4 +65,16 @@ function createMiniPokemonCard(pokemon) {
     miniPokemonCard.append(imgContainer, infoContainer);
     pokemonsContainer.appendChild(miniPokemonCard);
 }
-getPokemonsList();
+function getPokemonByName(name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //name
+        const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
+        const response = yield fetch(url);
+        const pokemonName = yield response.json();
+        // createBigPokemonCard(pokemonName)
+        nameInput.value = '';
+        console.log('pokemonName', pokemonName);
+    });
+}
+getPokemonByName('bulbasaur');
+// getPokemonsList()
