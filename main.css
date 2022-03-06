@@ -145,3 +145,6 @@ button:hover {
 	margin: 5px 0 7px;
 	letter-spacing: 1px;
 }
+.bigPokemonCard .type {
+	margin-top: 0;
+}
