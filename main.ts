@@ -100,6 +100,7 @@ type PProps = {
 	types: PType[]
 	weight: number
 }
+
 const searchButton = <HTMLButtonElement>document.querySelector('#search')
 const nameInput = <HTMLInputElement>document.querySelector('#nameInput')
 // console.log('nameInput: ', nameInput)
@@ -107,8 +108,11 @@ const nameInput = <HTMLInputElement>document.querySelector('#nameInput')
 const pokemonsContainer = <HTMLElement>(
 	document.querySelector('#pokemonContainer')
 )
-console.log('pokemonsContainer: ', pokemonsContainer)
 const pokemonModal = <HTMLElement>document.querySelector('#pokemonModal')
+document.addEventListener('load', function () {
+	console.log('window - load - capture') // 4th
+	pokemonModal.style.display = 'block'
+})
 
 const pokemon_number: number = 10
 
@@ -184,8 +188,10 @@ async function getPokemonByName(name: string) {
 	console.log('pokemonName', pokemonName)
 }
 function handleSearch() {
+	// event.preventDefault()
 	const name = nameInput.value
 	getPokemonByName(name)
+	pokemonModal.style.display = 'block'
 }
 searchButton.addEventListener('click', handleSearch)
 

@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,56 +7,112 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const searchButton = document.querySelector('#search');
-const nameInput = document.querySelector('#nameInput');
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var searchButton = document.querySelector('#search');
+var nameInput = document.querySelector('#nameInput');
 // console.log('nameInput: ', nameInput)
-const pokemonsContainer = (document.querySelector('#pokemonContainer'));
-console.log('pokemonsContainer: ', pokemonsContainer);
-const pokemonModal = document.querySelector('#pokemonModal');
-const pokemon_number = 10;
+var pokemonsContainer = (document.querySelector('#pokemonContainer'));
+var pokemonModal = document.querySelector('#pokemonModal');
+document.addEventListener('load', function () {
+    console.log('window - load - capture'); // 4th
+    pokemonModal.style.display = 'block';
+});
+var pokemon_number = 10;
 function getPokemonsList() {
-    return __awaiter(this, void 0, void 0, function* () {
-        for (let i = 1; i <= pokemon_number; i++) {
-            yield getPokemonById(i);
-        }
+    return __awaiter(this, void 0, void 0, function () {
+        var i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    i = 1;
+                    _a.label = 1;
+                case 1:
+                    if (!(i <= pokemon_number)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, getPokemonById(i)];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3:
+                    i++;
+                    return [3 /*break*/, 1];
+                case 4: return [2 /*return*/];
+            }
+        });
     });
 }
 function getPokemonById(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-        const response = yield fetch(url);
-        const pokemon = yield response.json();
-        createMiniPokemonCard(pokemon);
+    return __awaiter(this, void 0, void 0, function () {
+        var url, response, pokemon;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    url = "https://pokeapi.co/api/v2/pokemon/".concat(id);
+                    return [4 /*yield*/, fetch(url)];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    pokemon = _a.sent();
+                    createMiniPokemonCard(pokemon);
+                    return [2 /*return*/];
+            }
+        });
     });
 }
 function createMiniPokemonCard(pokemon) {
-    const poke_types = pokemon.types.map(type => type.type.name);
-    const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-    const miniPokemonCard = document.createElement('div');
+    var poke_types = pokemon.types.map(function (type) { return type.type.name; });
+    var name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+    var miniPokemonCard = document.createElement('div');
     miniPokemonCard.classList.add('miniPokemonCard');
     miniPokemonCard.setAttribute('aria-label', pokemon.name);
-    const imgContainer = document.createElement('div');
+    var imgContainer = document.createElement('div');
     imgContainer.classList.add('img-container');
     imgContainer.setAttribute('aria-label', pokemon.name);
-    const pokeImg = document.createElement('img');
+    var pokeImg = document.createElement('img');
     pokeImg.setAttribute('aria-label', pokemon.name);
-    pokeImg.setAttribute('src', `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`);
+    pokeImg.setAttribute('src', "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/".concat(pokemon.id, ".png"));
     pokeImg.setAttribute('alt', pokemon.name);
-    const infoContainer = document.createElement('div');
+    var infoContainer = document.createElement('div');
     infoContainer.classList.add('info');
     infoContainer.setAttribute('aria-label', pokemon.name);
-    const idPokemon = document.createElement('span');
+    var idPokemon = document.createElement('span');
     idPokemon.setAttribute('aria-label', pokemon.name);
     idPokemon.classList.add('number');
-    idPokemon.innerText = `#${pokemon.id.toString().padStart(3, '0')}`;
-    const pokemonName = document.createElement('h3');
+    idPokemon.innerText = "#".concat(pokemon.id.toString().padStart(3, '0'));
+    var pokemonName = document.createElement('h3');
     pokemonName.setAttribute('aria-label', pokemon.name);
     pokemonName.classList.add('name');
     pokemonName.innerText = name;
-    const pokemonType = document.createElement('small');
+    var pokemonType = document.createElement('small');
     pokemonType.classList.add('type');
-    pokemonType.innerText = `Type: `;
-    const spanType = document.createElement('span');
+    pokemonType.innerText = "Type: ";
+    var spanType = document.createElement('span');
     spanType.innerText = poke_types[0];
     pokemonType.appendChild(spanType);
     imgContainer.appendChild(pokeImg);
@@ -67,84 +122,96 @@ function createMiniPokemonCard(pokemon) {
     miniPokemonCard.addEventListener('click', getPokemonByLabel);
 }
 function getPokemonByName(name) {
-    return __awaiter(this, void 0, void 0, function* () {
-        //name
-        const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
-        const response = yield fetch(url);
-        const pokemonName = yield response.json();
-        createBigPokemonCard(pokemonName);
-        nameInput.value = '';
-        console.log('pokemonName', pokemonName);
+    return __awaiter(this, void 0, void 0, function () {
+        var url, response, pokemonName;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    url = "https://pokeapi.co/api/v2/pokemon/".concat(name);
+                    return [4 /*yield*/, fetch(url)];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    pokemonName = _a.sent();
+                    createBigPokemonCard(pokemonName);
+                    nameInput.value = '';
+                    console.log('pokemonName', pokemonName);
+                    return [2 /*return*/];
+            }
+        });
     });
 }
 function handleSearch() {
-    const name = nameInput.value;
+    // event.preventDefault()
+    var name = nameInput.value;
     getPokemonByName(name);
+    pokemonModal.style.display = 'block';
 }
 searchButton.addEventListener('click', handleSearch);
 function createBigPokemonCard(pokemon) {
-    const poke_types = pokemon.types.map(type => type.type.name);
+    var poke_types = pokemon.types.map(function (type) { return type.type.name; });
     console.log('poke_types: ', poke_types[0]);
-    const bigPokemonCard = document.createElement('div');
+    var bigPokemonCard = document.createElement('div');
     bigPokemonCard.classList.add('bigPokemonCard');
-    const firstMoves = 3;
-    const moves = [];
-    for (let i = 0; i < firstMoves; i++) {
+    var firstMoves = 3;
+    var moves = [];
+    for (var i = 0; i < firstMoves; i++) {
         moves.push(pokemon.moves[i].move.name);
     }
-    const abilities = pokemon.abilities.map(function (item) {
+    var abilities = pokemon.abilities.map(function (item) {
         return item.ability;
     });
-    const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
-    const abilitiesList = document.createElement('ul');
+    var name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+    var abilitiesList = document.createElement('ul');
     abilitiesList.classList.add('ability');
     abilities
         .map(function (item) {
-        const abilityLi = document.createElement('li');
+        var abilityLi = document.createElement('li');
         abilityLi.innerText = item.name;
         abilitiesList.appendChild(abilityLi);
     })
         .join('');
-    const movesList = document.createElement('ul');
+    var movesList = document.createElement('ul');
     movesList.classList.add('moves');
-    const movesHeader = document.createElement('h4');
-    movesHeader.innerText = `Main moves: `;
+    var movesHeader = document.createElement('h4');
+    movesHeader.innerText = "Main moves: ";
     movesList.appendChild(movesHeader);
     moves
         .map(function (move) {
-        const moveLi = document.createElement('li');
+        var moveLi = document.createElement('li');
         moveLi.innerText = move;
         movesList.appendChild(moveLi);
     })
         .join('');
-    const imgContainer = document.createElement('div');
+    var imgContainer = document.createElement('div');
     imgContainer.classList.add('img-container');
     imgContainer.setAttribute('aria-label', pokemon.name);
-    const pokeImg = document.createElement('img');
+    var pokeImg = document.createElement('img');
     pokeImg.setAttribute('aria-label', pokemon.name);
-    pokeImg.setAttribute('src', `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`);
+    pokeImg.setAttribute('src', "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/".concat(pokemon.id, ".png"));
     pokeImg.setAttribute('alt', pokemon.name);
-    const infoContainer = document.createElement('div');
+    var infoContainer = document.createElement('div');
     infoContainer.classList.add('info');
-    const numNameType = document.createElement('div');
-    const spanNum = document.createElement('span');
-    spanNum.innerText = `#${pokemon.id.toString().padStart(3, '0')}`;
+    var numNameType = document.createElement('div');
+    var spanNum = document.createElement('span');
+    spanNum.innerText = "#".concat(pokemon.id.toString().padStart(3, '0'));
     spanNum.classList.add('number');
-    const pokeName = document.createElement('h3');
+    var pokeName = document.createElement('h3');
     pokeName.classList.add('name');
     pokeName.innerText = name;
-    const pokemonType = document.createElement('small');
+    var pokemonType = document.createElement('small');
     pokemonType.classList.add('type');
-    pokemonType.innerText = `Type: `;
-    const spanType = document.createElement('span');
+    pokemonType.innerText = "Type: ";
+    var spanType = document.createElement('span');
     spanType.innerText = poke_types[0];
-    const pokeStats = document.createElement('section');
+    var pokeStats = document.createElement('section');
     pokeStats.classList.add('stats');
-    const divAbilities = document.createElement('div');
+    var divAbilities = document.createElement('div');
     divAbilities.classList.add('abilities');
-    const abilitiesHeader = document.createElement('h4');
+    var abilitiesHeader = document.createElement('h4');
     divAbilities.classList.add('abilities');
-    abilitiesHeader.innerText = `Main abilities: `;
+    abilitiesHeader.innerText = "Main abilities: ";
     divAbilities.append(abilitiesHeader, abilitiesList);
     pokeStats.append(divAbilities, movesList);
     pokemonType.appendChild(spanType);
