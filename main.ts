@@ -103,14 +103,12 @@ type PProps = {
 
 const searchButton = <HTMLButtonElement>document.querySelector('#search')
 const nameInput = <HTMLInputElement>document.querySelector('#nameInput')
-// console.log('nameInput: ', nameInput)
 
 const pokemonsContainer = <HTMLElement>(
 	document.querySelector('#pokemonContainer')
 )
 const pokemonModal = <HTMLElement>document.querySelector('#pokemonModal')
 document.addEventListener('load', function () {
-	console.log('window - load - capture') // 4th
 	pokemonModal.style.display = 'block'
 })
 
@@ -185,7 +183,6 @@ async function getPokemonByName(name: string) {
 	const pokemonName = await response.json()
 	createBigPokemonCard(pokemonName)
 	nameInput.value = ''
-	console.log('pokemonName', pokemonName)
 }
 function handleSearch() {
 	// event.preventDefault()
@@ -197,7 +194,7 @@ searchButton.addEventListener('click', handleSearch)
 
 function createBigPokemonCard(pokemon: PProps) {
 	const poke_types = pokemon.types.map(type => type.type.name)
-	console.log('poke_types: ', poke_types[0])
+
 	const bigPokemonCard = <HTMLDivElement>document.createElement('div')
 	bigPokemonCard.classList.add('bigPokemonCard')
 
@@ -221,11 +218,13 @@ function createBigPokemonCard(pokemon: PProps) {
 			abilitiesList.appendChild(abilityLi)
 		})
 		.join('')
+	const divMoves = <HTMLDivElement>document.createElement('div')
+	divMoves.classList.add('moves')
 	const movesList = <HTMLUListElement>document.createElement('ul')
 	movesList.classList.add('moves')
 	const movesHeader = <HTMLHeadingElement>document.createElement('h4')
 	movesHeader.innerText = `Main moves: `
-	movesList.appendChild(movesHeader)
+	divMoves.append(movesHeader, movesList)
 
 	moves
 		.map(function (move) {
@@ -277,7 +276,7 @@ function createBigPokemonCard(pokemon: PProps) {
 	abilitiesHeader.innerText = `Main abilities: `
 
 	divAbilities.append(abilitiesHeader, abilitiesList)
-	pokeStats.append(divAbilities, movesList)
+	pokeStats.append(divAbilities, divMoves)
 	pokemonType.appendChild(spanType)
 
 	imgContainer.appendChild(pokeImg)

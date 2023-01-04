@@ -36,11 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var searchButton = document.querySelector('#search');
 var nameInput = document.querySelector('#nameInput');
-// console.log('nameInput: ', nameInput)
 var pokemonsContainer = (document.querySelector('#pokemonContainer'));
 var pokemonModal = document.querySelector('#pokemonModal');
 document.addEventListener('load', function () {
-    console.log('window - load - capture'); // 4th
     pokemonModal.style.display = 'block';
 });
 var pokemon_number = 10;
@@ -136,7 +134,6 @@ function getPokemonByName(name) {
                     pokemonName = _a.sent();
                     createBigPokemonCard(pokemonName);
                     nameInput.value = '';
-                    console.log('pokemonName', pokemonName);
                     return [2 /*return*/];
             }
         });
@@ -151,7 +148,6 @@ function handleSearch() {
 searchButton.addEventListener('click', handleSearch);
 function createBigPokemonCard(pokemon) {
     var poke_types = pokemon.types.map(function (type) { return type.type.name; });
-    console.log('poke_types: ', poke_types[0]);
     var bigPokemonCard = document.createElement('div');
     bigPokemonCard.classList.add('bigPokemonCard');
     var firstMoves = 3;
@@ -172,11 +168,13 @@ function createBigPokemonCard(pokemon) {
         abilitiesList.appendChild(abilityLi);
     })
         .join('');
+    var divMoves = document.createElement('div');
+    divMoves.classList.add('moves');
     var movesList = document.createElement('ul');
     movesList.classList.add('moves');
     var movesHeader = document.createElement('h4');
     movesHeader.innerText = "Main moves: ";
-    movesList.appendChild(movesHeader);
+    divMoves.append(movesHeader, movesList);
     moves
         .map(function (move) {
         var moveLi = document.createElement('li');
@@ -213,7 +211,7 @@ function createBigPokemonCard(pokemon) {
     divAbilities.classList.add('abilities');
     abilitiesHeader.innerText = "Main abilities: ";
     divAbilities.append(abilitiesHeader, abilitiesList);
-    pokeStats.append(divAbilities, movesList);
+    pokeStats.append(divAbilities, divMoves);
     pokemonType.appendChild(spanType);
     imgContainer.appendChild(pokeImg);
     numNameType.append(spanNum, pokeName, pokemonType);
